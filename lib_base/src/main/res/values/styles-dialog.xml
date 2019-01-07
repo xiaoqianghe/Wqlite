@@ -1,0 +1,28 @@
+<resources>
+
+
+    <style name="AbsDialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowSoftInputMode">adjustPan</item>
+        <item name="android:windowIsFloating">true</item>
+    </style>
+
+    <style name="DialogBottomAnimation" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/base_dialog_enter_anim</item>
+        <item name="android:windowExitAnimation">@anim/base_dialog_exit_anim</item>
+    </style>
+
+    <style name="DialogAnimation" parent="android:Animation">
+        <!--<item name="android:windowEnterAnimation">@abase_dialog_enter_animanim</item>-->
+        <!--<item name="android:windowExitAnimation">@abase_dialog_exit_animanim</item>-->
+        <item name="android:windowEnterAnimation">@anim/base_dialog_loading_start</item>
+        <item name="android:windowExitAnimation">@anim/base_dialog_loading_stop</item>
+    </style>
+
+    <style name="DialoLoadinggAnimation" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/base_dialog_loading_start</item>
+        <item name="android:windowExitAnimation">@anim/base_dialog_loading_stop</item>
+    </style>
+</resources>

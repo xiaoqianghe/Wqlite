@@ -1,0 +1,182 @@
+apply plugin: 'com.android.application'
+
+
+//realm
+apply plugin: 'realm-android'
+
+
+def androidVer = rootProject.ext.android
+
+def keystoreFilepath = ''
+def keystorePSW = ''
+def keystoreAlias = ''
+def keystoreAliasPSW = ''
+// default keystore file, PLZ config file path in local.properties
+def keyfile = file('s.keystore.temp')
+
+
+
+Properties properties = new Properties()
+// local.properties file in the root director
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+keystoreFilepath = properties.getProperty("keystore.path")
+
+if (keystoreFilepath) {
+    keystorePSW = properties.getProperty("keystore.password")
+    keystoreAlias = properties.getProperty("keystore.alias")
+    keystoreAliasPSW = properties.getProperty("keystore.alias_password")
+    keyfile = file(keystoreFilepath)
+}
+
+android {
+
+
+    signingConfigs {
+
+        config {
+            keyAlias keystoreAlias
+            keyPassword keystoreAliasPSW
+            storeFile keyfile
+            storePassword keystorePSW
+        }
+    }
+
+    compileSdkVersion 26
+    defaultConfig {
+        applicationId "com.wqhe.superphoto.superphoto"
+        minSdkVersion 21
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+
+        multiDexEnabled true
+
+
+        //添加如下配置就OK了
+        javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
+
+    }
+    buildTypes {
+//        release {
+//            minifyEnabled false
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+//        }
+
+
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+
+            signingConfig signingConfigs.config
+        }
+    }
+
+    flavorDimensions "versionCode"
+
+    productFlavors {
+        //online update
+//        1. app.gradle
+//        2.RetrofitClient
+//        3.ApiService （版本， h5url）
+//        4.LoginFragment
+
+//        0
+        superphoto {
+            applicationId 'com.wqhe.superphoto.superphoto'
+            signingConfig signingConfigs.config
+            manifestPlaceholders = [
+                    APP_PINYIN   : "download",
+                    APP_ID       : "com.wqhe.superphoto.superphoto",
+                    APP_ORGNAME  : "剪辑师",
+                    JPUSH_PKGNAME: "com.wqhe.superphoto.superphoto",
+                    JPUSH_APPKEY : "2b971a0b54feed33ed374173",
+                    JPUSH_CHANNEL: "Android",
+
+            ]
+        }
+
+        perfectphoto {
+            applicationId 'com.wqhe.superphoto.perfectphoto'
+            signingConfig signingConfigs.config
+            manifestPlaceholders = [
+                    APP_PINYIN   : "download",
+                    APP_ID       : "com.wqhe.superphoto.perfectphoto",
+                    APP_ORGNAME  : "完美图片",
+                    JPUSH_PKGNAME: "com.wqhe.superphoto.perfectphoto",
+                    JPUSH_APPKEY : "2b971a0b54feed33ed374173",
+                    JPUSH_CHANNEL: "Android",
+
+            ]
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    //noinspection GradleCompatible
+    implementation 'com.android.support:appcompat-v7:26.1.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    //
+    //    androidTestCompile 'com.android.support:support-annotations:27.1.1'
+    configurations.all {
+        resolutionStrategy.force 'com.android.support:support-annotations:26.1.0'
+    }
+    //butterknife
+//    implementation 'com.jakewharton:butterknife:8.5.1'
+//    //   // annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
+//    //    apt 'com.jakewharton:butterknife-compiler:8.4.0'
+////    annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
+
+    //黄油刀
+    implementation 'com.jakewharton:butterknife-compiler:8.4.0'
+    implementation 'com.jakewharton:butterknife:8.4.0'
+
+    implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.3'
+    annotationProcessor "com.github.hotchemi:permissionsdispatcher-processor:3.1.0"
+    compile 'com.github.bumptech.glide:glide:3.6.1'
+    implementation 'com.android.support:multidex:1.0.0'
+    implementation project(':lib_base')
+    //litpal  数据库
+    compile 'org.litepal.android:core:1.6.1'
+    //知乎的图片选择
+    implementation 'com.zhihu.android:matisse:0.4.3'
+
+
+//
+
+    implementation 'cn.jiguang.sdk:jpush:3.1.1'
+
+    implementation 'cn.jiguang.sdk:jcore:1.1.9'
+
+
+
+    //微信分享
+    implementation 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:1.0.2'
+    //数据统计
+    compile 'com.tencent.bugly:crashreport:latest.release'
+
+    compile 'com.blankj:utilcode:1.15.0'
+
+//
+//    implementation 'com.squareup.picasso:picasso:2.71828'
+
+    compile 'com.squareup.picasso:picasso:2.5.2'
+
+
+
+
+
+
+
+
+
+
+
+}

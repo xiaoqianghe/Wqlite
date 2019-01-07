@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="colorStatus">#32A7F6</color>
+    <color name="white">#FFFFFF</color><!--白色-->
+
+    <color name="dracula_album_count_text">#32A7F6</color><!--白色-->
+
+</resources>
+

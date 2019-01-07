@@ -1,0 +1,91 @@
+apply plugin: 'com.android.library'
+
+def androidVer = rootProject.ext.android
+def dependenciesVer = rootProject.ext.dependencies
+
+android {
+    compileSdkVersion androidVer.compileSdkVersion
+
+    defaultConfig {
+        minSdkVersion androidVer.minSdkVersion
+        targetSdkVersion androidVer.targetSdkVersion
+        versionCode androidVer.versionCode
+        versionName androidVer.versionName
+        ndk {
+            abiFilters "armeabi", "armeabi-v7a", "x86", "mips"
+        }
+        //添加如下配置就OK了
+        javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    api fileTree(dir: 'libs', include: ['*.jar'])
+
+//    api dependenciesVer.constraint
+    api dependenciesVer.supportV4
+    api dependenciesVer.appcompatV7
+
+    api dependenciesVer.fragmentation
+    api dependenciesVer.gif
+//    api dependenciesVer.permissionsdispatcher
+//    api dependenciesVer.permissionsdispatcherProcessor
+
+
+    //retrofit
+    api dependenciesVer.retrofit
+    api dependenciesVer.retrofitGson
+    api dependenciesVer.retrofitRxjava
+    api dependenciesVer.logginginterceptor
+    //rx
+    api dependenciesVer.rxjava
+    api dependenciesVer.rxandroid
+
+
+    compile 'com.alibaba:fastjson:1.2.46'
+    compile 'com.alibaba:fastjson:1.1.68.android'
+
+
+    repositories {
+        jcenter()
+    }
+
+
+    //黄油刀
+    implementation 'com.jakewharton:butterknife-compiler:8.4.0'
+    implementation 'com.jakewharton:butterknife:8.4.0'
+
+    implementation  'com.gyf.barlibrary:barlibrary:2.3.0'
+    implementation 'com.trello.rxlifecycle2:rxlifecycle-components:2.1.0'
+
+
+
+//    //知乎的图片选择
+//    implementation 'com.zhihu.android:matisse:0.4.3'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
